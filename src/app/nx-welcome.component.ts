@@ -6,13 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <!--
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     This is a starter component and can be deleted.
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     Delete this file and get started with your project!
-     * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-     -->
     <style>
       html {
         -webkit-text-size-adjust: 100%;
