@@ -1,0 +1,43 @@
+.content {
+    max-width: 20rem;
+    padding-top: 4rem;
+    margin: 0 auto;
+
+    @media (min-width: 768px) {
+        max-width: 38rem;
+        padding-top: 6rem;
+    }
+
+    @media (min-width: 1280px) {
+        max-width: 48rem;
+        padding-top: 8rem;
+    }
+
+    &__title {
+        text-align: center;
+    }
+
+    &__span {
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+    &__link {
+        text-decoration: underline;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    &__field {
+        margin-top: 2rem;
+    }
+
+    &__button {
+        margin-top: 3rem;
+        width: fit-content;
+        align-self: center;
+    }
+}
