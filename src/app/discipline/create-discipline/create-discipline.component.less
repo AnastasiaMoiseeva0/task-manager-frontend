@@ -1,0 +1,53 @@
+.create-disciplines {
+  margin: 1rem 1.25rem;
+
+  @media (min-width: 768px) {
+    margin: 1.6rem 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    margin: 2rem 4rem;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+
+  &__title {
+    margin: 0 0 1rem;
+    font: var(--tui-font-heading-6);
+    text-align: center;
+
+    @media (min-width: 768px) {
+      font: var(--tui-font-heading-5);
+      margin: 0;
+    }
+
+    @media (min-width: 1280px) {
+      font: var(--tui-font-heading-3);
+    }
+  }
+
+  &__form {
+    margin: 2rem 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__field {
+    margin-bottom: 1.5rem;
+    max-width: 60rem;
+  }
+
+  &__button {
+    align-self: center;
+    width: fit-content;
+    margin-bottom: 2rem;
+  }
+
+}
