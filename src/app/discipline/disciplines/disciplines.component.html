@@ -1,0 +1,68 @@
+<section class="disciplines">
+  <div class="disciplines__header">
+    <h1 class="disciplines__title">Все дисциплины</h1>
+    <button tuiButton type="button" iconRight="tuiIconPlus">
+      <a class="disciplines__button" routerLink="/disciplines/create">Новая дисциплина</a>
+    </button>
+  </div>
+  <form class="b-form" [formGroup]="searchForm">
+    <tui-input class="disciplines__input" tuiTextfieldIconLeft="tuiIconSearch" tuiTextfieldSize="m" formControlName="search">
+      Поиск по дисциплине
+      <input tuiTextfield type="text" />
+    </tui-input>
+  </form>
+  <div class="disciplines__table-container">
+    <table class="tui-table disciplines__table" tuiTable>
+      <thead>
+        <tr>
+          <th class="tui-table__th" tuiTh>Название</th>
+          <th class="tui-table__th" tuiTh>Учебное заведение</th>
+          <th class="tui-table__th" tuiTh>Форма проверки знаний</th>
+          <th class="tui-table__th disciplines__table_th-icon" tuiTh></th>
+        </tr>
+      </thead>
+      <tbody tuiTbody>
+        <tr class="tui-table__tr">
+          <td class="tui-table__td" tuiTd>
+            <div>
+              <span tuiTitle>
+                Философия
+              </span>
+            </div>
+          </td>
+          <td class="tui-table__td" tuiTd>
+            <div>
+              <span tuiTitle>МФТИ</span>
+            </div>
+          </td>
+          <td class="tui-table__td">
+            <div
+              tuiMode="onLight"
+              class="tui-space_right-2 tui-space_bottom-2 outline outline_dark"
+            >
+              <tui-badge
+                status="primary"
+                value="Зачет"
+                class="tui-space_right-2 tui-space_bottom-2"
+              ></tui-badge>
+            </div>
+          </td>
+          <td tuiTd class="disciplines__table_td-icon">
+            <span tuiStatus>
+              <button
+                appearance="link"
+                icon="tuiIconTrash2"
+                size="xs"
+                tuiIconButton
+              >
+                Delete
+              </button>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<router-outlet />

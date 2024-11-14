@@ -1,0 +1,123 @@
+.discipline {
+  margin: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    margin: 1.6rem 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    margin: 0;
+    flex-direction: row;
+    min-height: 100vh;
+  }
+
+  &__left-side {
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 40rem);
+
+    background-color: var(--tui-base-02);
+
+    @media (min-width: 1280px) {
+      padding: 2.5rem;
+      border-right: 2px solid #ededed;
+    }
+  }
+
+  &__title {
+    margin: 0 0 1rem;
+    text-align: center;
+    font: var(--tui-font-heading-6);
+
+    @media (min-width: 768px) {
+      font: var(--tui-font-heading-5);
+    }
+
+    @media (min-width: 1280px) {
+      margin: 0;
+
+      text-align: start;
+      font: var(--tui-font-heading-3);
+    }
+
+    &_with-margin {
+      margin: 2rem 0 1rem;
+    }
+  }
+
+  &__tags {
+    margin: 0.25rem 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @media (min-width: 1280px) {
+      margin: 0.5rem 0 0;
+    }
+  }
+
+  &__tag {
+    background-color: #526ed3;
+    color: #fff;
+    border-radius: 1rem;
+    padding: 0.25rem 0.7rem;
+
+    &:not(:last-of-type) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__univercity {
+    font: var(--tui-font-text-m);
+
+    @media (min-width: 768px) {
+      font: var(--tui-font-text-m-2);
+    }
+
+    @media (min-width: 1280px) {
+      font: var(--tui-font-heading-6);
+      margin: 2rem 0 0;
+    }
+  }
+
+  &__description {
+    font: var(--tui-font-text-m);
+    margin: 1rem 0 0;
+  }
+
+  &__table {
+    margin: 1rem 0 0;
+    background-color: var(--tui-base-01);
+  }
+
+  &__right-side {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 1280px) {
+      padding: 0rem 2rem;
+      width: 100%;
+    }
+  }
+
+  &__accordion {
+    margin-top: 1rem;
+    width: 100%;
+
+    @media (min-width: 1280px) {
+      margin-top: 1.5rem;
+      width: 25rem;
+    }
+  }
+
+  &__button {
+    width: fit-content;
+    margin-top: 2rem;
+
+    @media (min-width: 1280px) {
+      margin-top: 3rem;
+    }
+  }
+}
