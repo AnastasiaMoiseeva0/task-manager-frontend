@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
-import { take } from 'rxjs';
+import { EMPTY, catchError, take, tap } from 'rxjs';
 import { TuiAlertService } from '@taiga-ui/core';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -28,29 +29,38 @@ export class LoginPageComponent {
 
   constructor(
     private loginService: LoginService,
-    private tuiAlertService: TuiAlertService
-  ) {}
+    private tuiAlertService: TuiAlertService,
+    private router: Router
+  ) { }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      if (!this.loginForm.valid) {
-        return;
-      }
-
-      const { email, password } = this.loginForm.value;
-
-      this.loginService.authorize(email!, password!).subscribe({
-        error: (error) => {
-          this.tuiAlertService
-            .open('При авторизации произошла ошибка', {
-              status: 'error',
-              autoClose: false,
-            })
-            .pipe(take(1))
-            .subscribe();
-          console.error('Registration error', error);
-        },
-      });
+    if (!this.loginForm.valid) {
+      return;
     }
+
+    const { email, password } = this.loginForm.value;
+
+    this.loginService
+      .authorize(email!, password!)
+      .pipe(
+        tap(() => {
+          this.router.navigateByUrl('/schedule');
+        }),
+        catchError(() => {
+          this.showErrorNotification();
+          return EMPTY;
+        })
+      )
+      .subscribe();
+  }
+
+  private showErrorNotification() {
+    this.tuiAlertService
+      .open('При авторизации произошла ошибка', {
+        status: 'error',
+        autoClose: false,
+      })
+      .pipe(take(1))
+      .subscribe();
   }
 }

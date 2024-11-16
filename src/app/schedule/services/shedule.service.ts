@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Observable, switchMap, iif, of, tap, catchError } from 'rxjs';
 import { CacheService } from 'src/app/services/cache.service';
+import { LoggerService } from 'src/app/services/logger.service';
 import { API_URL } from 'src/app/tokens/api-url.token';
 import { Discipline, ScheduleEvent } from 'src/dto';
 
@@ -10,7 +11,8 @@ export class SheduleService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly cacheService: CacheService,
-    @Inject(API_URL) private apiUrl: string
+    @Inject(API_URL) private apiUrl: string,
+    private logger: LoggerService
   ) {}
 
   public getSchedulesEvents$(
@@ -31,8 +33,8 @@ export class SheduleService {
               tap((data) => {
                 this.cacheService.updateCache(CACHE_KEY, data);
               }),
-              catchError((error) => {
-                console.error('Error fetching schedule events:', error);
+              catchError(() => {
+                this.logger.error('Error fetching schedule events');
                 return of(null);
               })
             )

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from './register.service';
-import { take } from 'rxjs';
+import { EMPTY, catchError, take, tap } from 'rxjs';
 import { TuiAlertService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
@@ -34,31 +34,44 @@ export class RegisterPageComponent {
   ) {}
 
   onSubmit() {
-    if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
-      this.registerService.register(email!, password!).subscribe({
-        next: () => {
-          this.router.navigateByUrl('');
-
-          this.tuiAlertService
-            .open('Вы зарегистрированы', {
-              status: 'success',
-              autoClose: false,
-            })
-            .pipe(take(1))
-            .subscribe();
-        },
-        error: (error) => {
-          this.tuiAlertService
-            .open('При регистрации произошла ошибка', {
-              status: 'error',
-              autoClose: false,
-            })
-            .pipe(take(1))
-            .subscribe();
-          console.error('Registration error', error);
-        },
-      });
+    if (!this.registerForm.valid) {
+      return;
     }
+
+    const { email, password } = this.registerForm.value;
+    this.registerService
+      .register(email!, password!)
+      .pipe(
+        tap(() => {
+          this.showSuccessNotification();
+        }),
+        catchError(() => {
+          this.showErrorNotification();
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this.router.navigateByUrl('/schedule');
+      });
+  }
+
+  private showErrorNotification() {
+    this.tuiAlertService
+      .open('При авторизации произошла ошибка', {
+        status: 'error',
+        autoClose: false,
+      })
+      .pipe(take(1))
+      .subscribe();
+  }
+
+  private showSuccessNotification() {
+    this.tuiAlertService
+      .open('Вы зарегистрированы', {
+        status: 'success',
+        autoClose: false,
+      })
+      .pipe(take(1))
+      .subscribe();
   }
 }

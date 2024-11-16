@@ -4,13 +4,15 @@ import { Inject, Injectable } from '@angular/core';
 import { API_URL } from '../../tokens/api-url.token';
 import { CacheService } from 'src/app/services/cache.service';
 import { Discipline, DisciplineDetails } from 'src/dto';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Injectable()
 export class DisciplineService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly cacheService: CacheService,
-    @Inject(API_URL) private apiUrl: string
+    @Inject(API_URL) private apiUrl: string,
+    private logger: LoggerService
   ) {}
 
   public getDisciplines$(): Observable<Discipline[]> {
@@ -25,8 +27,8 @@ export class DisciplineService {
             tap((data) => {
               this.cacheService.updateCache(CACHE_KEY, data);
             }),
-            catchError((error) => {
-              console.error('Error fetching disciplines:', error);
+            catchError(() => {
+              this.logger.error('Error fetching disciplines');
               return of([]);
             })
           )
@@ -47,8 +49,8 @@ export class DisciplineService {
             tap((data) => {
               this.cacheService.updateCache(CACHE_KEY, data);
             }),
-            catchError((error) => {
-              console.error('Error fetching discipline:', error);
+            catchError(() => {
+              this.logger.error('Error fetching discipline');
               return of(null);
             })
           )
