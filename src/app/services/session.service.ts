@@ -8,7 +8,7 @@ export enum Key {
   providedIn: 'root'
 })
 export class SessionStorageService {
-  set<T extends object>(key: Key, value: T) {
+  set<T extends object | string>(key: Key, value: T) {
     sessionStorage.setItem(key, JSON.stringify(value));
   }
 
