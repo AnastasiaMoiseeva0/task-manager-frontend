@@ -17,7 +17,6 @@ import { LoginService } from './login/login.service';
 import { SessionStorageService } from './services/session.service';
 import { CacheService } from './services/cache.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import localeRu from '@angular/common/locales/ru'
 import { DisciplineService } from './discipline/services/discipline.service';
 import { SheduleService } from './schedule/services/shedule.service';
