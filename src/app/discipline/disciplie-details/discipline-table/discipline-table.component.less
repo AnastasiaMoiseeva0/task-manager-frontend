@@ -45,22 +45,27 @@
     }
   }
 
-  &__table-container {
-    overflow: scroll;
-
-    @media (min-width: 1280px) {
-      overflow: inherit;
+  &__table {
+    &_th-icon,
+    &_td-icon {
+      width: 40px;
+      cursor: pointer;
     }
   }
+}
 
-  &__table {
-    overflow-x: auto;
-    min-width: 40rem;
-    table-layout: fixed;
-    
-    &_th-icon, &_td-icon {
-        width: 40px;
-    }
+.scroll {
+  width: 100%;
 
+  @media (min-width: 1280px) {
+    min-width: 50rem;
+  }
+
+  @media (min-width: 1440px) {
+    min-width: 60rem;
+  }
+
+  @media (min-width: 1920px) {
+    min-width: 80rem;
   }
 }

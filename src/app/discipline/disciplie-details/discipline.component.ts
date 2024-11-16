@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
+import { EMPTY, Observable, map, of, switchMap } from 'rxjs';
+import { DisciplineDetails } from 'src/dto';
+import { DisciplineService } from '../services/discipline.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-discipline-page',
@@ -16,11 +19,16 @@ import { TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DisciplinePageComponent {
-  searchForm: FormGroup;
+  public discipline$: Observable<DisciplineDetails | null> = EMPTY;
+    constructor(private disciplineService: DisciplineService, private activatedRoute: ActivatedRoute ) {
+  }
 
-  constructor() {
-    this.searchForm = new FormGroup({
-      search: new FormControl(''),
-    });
+  ngOnInit() {
+    this.discipline$ = this.activatedRoute.paramMap
+      .pipe(
+        map((param) => param.get('id')),
+        switchMap((id) => id ? this.disciplineService.getDiscipline$(id) : of(null)),
+      )
   }
 }
+

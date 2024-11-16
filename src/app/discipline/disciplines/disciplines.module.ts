@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DisciplinesPageComponent } from './disciplines.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TuiButtonModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiButtonModule, TuiScrollbarModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { TuiBadgeModule, TuiInputModule } from '@taiga-ui/kit';
+import { DisciplineService } from '../services/discipline.service';
 
 @NgModule({
   declarations: [DisciplinesPageComponent],
@@ -19,7 +20,11 @@ import { TuiBadgeModule, TuiInputModule } from '@taiga-ui/kit';
     TuiButtonModule,
     TuiBadgeModule,
     TuiTextfieldControllerModule,
-    TuiInputModule
+    TuiInputModule,
+    TuiScrollbarModule
+  ],
+  providers: [
+    DisciplineService,
   ],
   exports: [DisciplinesPageComponent],
 })

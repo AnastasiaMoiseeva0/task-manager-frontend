@@ -7,6 +7,7 @@ import { TuiAccordionModule } from '@taiga-ui/kit';
 import { DisciplineTablePageComponent } from "./discipline-table/discipline-table.component";
 import { AccordionPageComponent } from "../accordion/accordion.component";
 import { TuiSvgModule } from '@taiga-ui/core';
+import { TuiLetModule } from '@taiga-ui/cdk';
 
 @NgModule({
   declarations: [DisciplinePageComponent],
@@ -20,6 +21,7 @@ import { TuiSvgModule } from '@taiga-ui/core';
         }]),
     TuiAccordionModule,
     TuiSvgModule,
+    TuiLetModule,
     DisciplineTablePageComponent,
     AccordionPageComponent
 ],

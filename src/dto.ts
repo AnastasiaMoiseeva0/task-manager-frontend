@@ -60,7 +60,7 @@ export type DisciplineCreateResponce = DisciplineDetails;
 
 // --------------
 
-export interface  ScheduleEvent {
+export interface ScheduleEvent {
     id: string
     disciplineId: Discipline['id'], // id/строка
     classType: string, // id/строка из перечисления типов событий (Практика/Лекции/...)

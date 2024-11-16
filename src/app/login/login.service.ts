@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { API_URL } from '../tokens/api-url.token';
-import { Key, SessionStorageService } from './../services/session.service';
+import { Key, SessionStorageService } from '../services/session.service';
 
 @Injectable()
 export class LoginService {

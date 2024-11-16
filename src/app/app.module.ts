@@ -18,6 +18,8 @@ import { CacheService } from './services/cache.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import localeRu from '@angular/common/locales/ru'
+import { DisciplineService } from './discipline/services/discipline.service';
+import { SheduleService } from './schedule/services/shedule.service';
 
 registerLocaleData(localeRu)
 
@@ -40,6 +42,8 @@ registerLocaleData(localeRu)
     RegisterService,
     LoginService,
     SessionStorageService,
+    DisciplineService,
+    SheduleService,
     CacheService,
     {
       provide: API_URL,
