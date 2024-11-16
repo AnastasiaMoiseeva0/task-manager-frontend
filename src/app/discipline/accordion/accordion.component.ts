@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiAccordionModule} from '@taiga-ui/kit';
 
@@ -16,6 +16,8 @@ import { TuiAccordionModule} from '@taiga-ui/kit';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccordionPageComponent {
+  @Input() files: File[] = [];
+
 
   constructor() {
   }

@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
-  ValidatorFn,
+  Validators,
 } from '@angular/forms';
-import { TuiValidationError } from '@taiga-ui/cdk';
-import { TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
+import { TuiAlertService, TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
 import { TuiFileLike } from '@taiga-ui/kit';
+import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
+import { DisciplineService } from '../services/discipline.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-create-discipline-page',
@@ -19,22 +20,30 @@ import { TuiFileLike } from '@taiga-ui/kit';
       appearance: TuiAppearance.Outline,
       size: 'm',
     }),
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        required: 'Введите значение'
+      },
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateDisciplinePageComponent {
-  disciplineForm: FormGroup;
 
-  constructor() {
-    this.disciplineForm = new FormGroup({
-      name: new FormControl(''),
-      organization: new FormControl(''),
-      checkKnowledge: new FormControl(''),
-      tags: new FormControl(''),
-      description: new FormControl(''),
-      files: new FormControl('')
-    });
-  }
+  disciplineForm = new FormGroup({
+    name: new FormControl<string | null>('', [Validators.required]),
+    checkKnowledge: new FormControl<string | null>('', [Validators.required]),
+    organization: new FormControl<string | null>(''),
+    tags: new FormControl<string[] | null>([]),
+    description: new FormControl<string | null>(''),
+    files: new FormControl<File[] | null>([]),
+  });
+
+  constructor(
+    private disciplineService: DisciplineService,
+    private tuiAlertService: TuiAlertService
+  ) {}
 
   readonly itemsType = ['Экзамен', 'Зачет', "Диф.зачет"];
 
@@ -42,7 +51,6 @@ export class CreateDisciplinePageComponent {
 
   ngOnInit(): void {
     this.disciplineForm.controls['files'].statusChanges.subscribe((response) => {
-      console.info('STATUS', response);
       console.info('ERRORS', this.disciplineForm.controls['files'].errors, '\n');
     });
   }
@@ -62,16 +70,26 @@ export class CreateDisciplinePageComponent {
       (rejected) => rejected.name !== name
     );
   }
+  
+   onSubmit() {
+    if (this.disciplineForm.valid) {
+      const { name, checkKnowledge, organization, tags, description, files } = this.disciplineForm.value;
 
-}
-
-export function maxFilesLength(maxLength: number): ValidatorFn {
-  return ({ value }: AbstractControl) =>
-    value.length > maxLength
-      ? {
-          maxLength: new TuiValidationError(
-            'Error: maximum limit - 5 files for upload'
-          ),
-        }
-      : null;
+      this.disciplineService.create$(name!, checkKnowledge!, organization!, tags!, description!, files!).subscribe({
+        error: (error) => {
+          this.tuiAlertService
+            .open('При создании дисциплины произошла ошибка', {
+              status: 'error',
+              autoClose: false,
+            })
+            .pipe(take(1))
+            .subscribe();
+          console.error('Registration error', error);
+        },
+      });
+      this.disciplineForm.reset();
+    } else {
+      this.disciplineForm.markAllAsTouched();
+    }
+  }
 }

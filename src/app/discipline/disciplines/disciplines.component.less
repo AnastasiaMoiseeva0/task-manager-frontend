@@ -1,6 +1,10 @@
 .disciplines {
-  margin: 0 4rem;
+  margin: 0 1rem;
   padding: 2rem 0;
+
+  @media (min-width: 1280px) {
+    margin: 0 4rem;
+  }
 
   &__header {
     display: flex;
@@ -48,7 +52,7 @@
 
   &__table-container {
     overflow: scroll;
-    background-color: #FFF;
+    background-color: #fff;
     border-radius: 10px;
 
     @media (min-width: 1280px) {
@@ -58,12 +62,26 @@
 
   &__table {
     overflow-x: auto;
-    min-width: 500px;
+    min-width: 31.25rem;
     table-layout: fixed;
-    
-    &_th-icon, &_td-icon {
-        width: 40px;
-    }
 
+    &_th-icon,
+    &_td-icon {
+      width: 3rem;
+    }
+  }
+}
+
+.title-link {
+  width: 100%;
+  display: block;
+
+  text-decoration: none;
+  color: #000;
+}
+
+.tui-table {
+  &__th {
+    font-size: var(--tui-font-text-l);
   }
 }

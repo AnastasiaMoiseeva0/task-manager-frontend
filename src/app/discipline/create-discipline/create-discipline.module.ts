@@ -5,6 +5,7 @@ import { CreateDisciplinePageComponent } from './create-discipline.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiButtonModule, TuiDataListModule, TuiErrorModule, TuiLabelModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { TuiBadgeModule, TuiComboBoxModule, TuiDataListWrapperModule, TuiFieldErrorPipeModule, TuiFilesModule, TuiInputFilesModule, TuiInputModule, TuiInputTagModule, TuiSelectModule, TuiStringifyContentPipeModule, TuiTextareaModule } from '@taiga-ui/kit';
+import { DisciplineService } from '../services/discipline.service';
 
 @NgModule({
   declarations: [CreateDisciplinePageComponent],
@@ -28,7 +29,11 @@ import { TuiBadgeModule, TuiComboBoxModule, TuiDataListWrapperModule, TuiFieldEr
     TuiFilesModule,
     TuiInputFilesModule,
     TuiErrorModule,
-    TuiFieldErrorPipeModule
+    TuiFieldErrorPipeModule,
+    TuiInputTagModule
+  ],
+  providers: [
+    DisciplineService
   ],
   exports: [CreateDisciplinePageComponent],
 })

@@ -16,12 +16,11 @@
   &__left-side {
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - 40rem);
-
-    background-color: var(--tui-base-02);
 
     @media (min-width: 1280px) {
+      max-width: calc(100% - 30rem);
       padding: 2.5rem;
+      background-color: var(--tui-base-02);
       border-right: 2px solid #ededed;
     }
   }
@@ -45,6 +44,11 @@
     &_with-margin {
       margin: 2rem 0 1rem;
     }
+  }
+
+  &__icon {
+    margin-left: 1rem;
+    cursor: pointer;
   }
 
   &__tags {
@@ -95,6 +99,11 @@
   &__right-side {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
+
+    @media (min-width: 1280px) {
+      margin-bottom: 0;
+    }
 
     @media (min-width: 1280px) {
       padding: 0rem 2rem;
@@ -103,13 +112,8 @@
   }
 
   &__accordion {
-    margin-top: 1rem;
+    margin-bottom: 3rem;
     width: 100%;
-
-    @media (min-width: 1280px) {
-      margin-top: 1.5rem;
-      width: 25rem;
-    }
   }
 
   &__button {

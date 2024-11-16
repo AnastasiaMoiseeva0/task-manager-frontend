@@ -3,21 +3,25 @@
     <h1 class="create-disciplines__title">Новая дисциплина</h1>
   </div>
   <div>
-    <form class="b-form create-disciplines__form" [formGroup]="disciplineForm">
-      <label tuiLabel="Введите наименование дисциплины">
+    <form class="b-form create-disciplines__form" [formGroup]="disciplineForm" (submit)="onSubmit()">
+      <label class="create-disciplines__field" tuiLabel="Введите наименование дисциплины">
         <tui-input
-          class="create-disciplines__field"
+          
           formControlName="name"
           tuiTextfieldSize="l"
           [tuiTextfieldCleaner]="true"
         >
-          Наименование дисциплины
+          Наименование дисциплины*
           <input tuiTextfield type="text" />
         </tui-input>
+        <tui-error
+          [error]="[] | tuiFieldError | async"
+          formControlName="name"
+        ></tui-error>
       </label>
-      <label tuiLabel="Введите наименование учебного заведения">
+      <label class="create-disciplines__field" tuiLabel="Введите наименование учебного заведения">
         <tui-input
-          class="create-disciplines__field"
+         
           formControlName="organization"
           tuiTextfieldSize="l"
           [tuiTextfieldCleaner]="true"
@@ -26,13 +30,12 @@
           <input tuiTextfield type="text" />
         </tui-input>
       </label>
-      <label tuiLabel="Выберите форму проверки знаний">
+      <label class="create-disciplines__field" tuiLabel="Выберите форму проверки знаний">
         <tui-select
-          class="create-disciplines__field"
           #select
           formControlName="checkKnowledge"
         >
-          Форма проверки знаний
+          Форма проверки знаний*
           <tui-data-list *tuiDataList>
             <tui-opt-group>
               @for (item of itemsType; track $index) {
@@ -43,39 +46,45 @@
             </tui-opt-group>
           </tui-data-list>
         </tui-select>
+        <tui-error
+          [error]="[] | tuiFieldError | async"
+          formControlName="checkKnowledge"
+        ></tui-error>
       </label>
-      <label tuiLabel="Введите теги для дисциплины">
+      <label class="create-disciplines__field" tuiLabel="Введите теги для дисциплины">
         <tui-input-tag
-          class="b-form create-disciplines__field"
+          class="b-form"
           formControlName="tags"
           [tuiTextfieldLabelOutside]="true"
         >
           Введите теги
         </tui-input-tag>
       </label>
-      <label tuiLabel="Добавьте описание">
+      <label class="create-disciplines__field" tuiLabel="Добавьте описание">
         <tui-textarea
-          class="create-disciplines__field"
           formControlName="description"
         >
           Описание к дисциплине</tui-textarea
         >
       </label>
-      <label tuiLabel="Добавьте файлы">
+      <label class="create-disciplines__field" tuiLabel="Добавьте файлы">
         <tui-input-files
-          class="event__field"
           formControlName="files"
           [multiple]="true"
           accept=""
           (reject)="onReject($event)"
         ></tui-input-files>
         <tui-files class="tui-space_top-1">
-          <tui-file
-            *ngFor="let file of disciplineForm.controls['files'].valueChanges | async"
-            [file]="file"
-            [showDelete]="disciplineForm.controls['files'].enabled"
-            (removed)="removeFile(file)"
-          ></tui-file>
+          <ng-container *ngFor="
+            let file of disciplineForm.controls['files'].valueChanges | async
+          ">
+            <tui-file
+              [file]="file"
+              [showDelete]="disciplineForm.controls['files'].enabled"
+              (removed)="removeFile(file)"
+            ></tui-file>
+
+          </ng-container>
           <tui-file
             *ngFor="let file of rejectedFiles"
             state="error"
@@ -84,10 +93,6 @@
             (removed)="clearRejected(file)"
           ></tui-file>
         </tui-files>
-        <tui-error
-          [error]="['maxLength'] | tuiFieldError | async"
-          formControlName="files"
-        ></tui-error>
       </label>
       <button
         type="submit"

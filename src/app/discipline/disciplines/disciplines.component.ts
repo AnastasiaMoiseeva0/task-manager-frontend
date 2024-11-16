@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
+import { DisciplineService } from '../services/discipline.service';
+import { Observable } from 'rxjs';
+import { Discipline } from 'src/dto';
 
 @Component({
   selector: 'app-disciplines-page',
@@ -17,10 +20,13 @@ import { TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
 })
 export class DisciplinesPageComponent {
   searchForm: FormGroup;
+  disciplines$: Observable<Discipline[]>;
 
-  constructor() {
+  constructor(private disciplinesService: DisciplineService) {
     this.searchForm = new FormGroup({
-      search: new FormControl(''),
+      search: new FormControl<string>(''),
     });
+
+    this.disciplines$ = this.disciplinesService.getDisciplines$();
   }
 }

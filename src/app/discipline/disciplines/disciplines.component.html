@@ -1,3 +1,4 @@
+<tui-scrollbar class="scroll">
 <section class="disciplines">
   <div class="disciplines__header">
     <h1 class="disciplines__title">Все дисциплины</h1>
@@ -15,24 +16,24 @@
     <table class="tui-table disciplines__table" tuiTable>
       <thead>
         <tr>
-          <th class="tui-table__th" tuiTh>Название</th>
-          <th class="tui-table__th" tuiTh>Учебное заведение</th>
-          <th class="tui-table__th" tuiTh>Форма проверки знаний</th>
-          <th class="tui-table__th disciplines__table_th-icon" tuiTh></th>
+          <th class="tui-table__th">Название</th>
+          <th class="tui-table__th">Учебное заведение</th>
+          <th class="tui-table__th">Форма проверки знаний</th>
+          <th class="tui-table__th">Теги</th>
+          <th class="tui-table__th disciplines__table_th-icon"></th>
         </tr>
       </thead>
-      <tbody tuiTbody>
+      <tbody>
+        @for (item of disciplines$ | async; track $index) {
         <tr class="tui-table__tr">
-          <td class="tui-table__td" tuiTd>
-            <div>
-              <span tuiTitle>
-                Философия
-              </span>
-            </div>
+          <td class="tui-table__td">
+            <a class="title-link" [routerLink]="'/disciplines/' + item.id">
+            {{item.name}}
+          </a>
           </td>
-          <td class="tui-table__td" tuiTd>
+          <td class="tui-table__td">
             <div>
-              <span tuiTitle>МФТИ</span>
+              <span>{{item.organization}}</span>
             </div>
           </td>
           <td class="tui-table__td">
@@ -47,7 +48,21 @@
               ></tui-badge>
             </div>
           </td>
-          <td tuiTd class="disciplines__table_td-icon">
+          <td class="tui-table__td">
+            <div
+              tuiMode="onLight"
+              class="tui-space_right-2 tui-space_bottom-2 outline outline_dark"
+            >
+            @for (tag of item.tags; track $index) {
+              <tui-badge
+                status="neutral"
+                [value]="tag"
+                class="tui-space_right-2 tui-space_bottom-2"
+              ></tui-badge>
+            }
+            </div>
+          </td>
+          <td class="disciplines__table_td-icon">
             <span tuiStatus>
               <button
                 appearance="link"
@@ -60,9 +75,11 @@
             </span>
           </td>
         </tr>
+        }
       </tbody>
     </table>
   </div>
 </section>
+</tui-scrollbar>
 
 <router-outlet />
