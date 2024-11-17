@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { TuiAlertService, TuiAppearance, tuiButtonOptionsProvider } from '@taiga-ui/core';
+  TuiAlertService,
+  TuiAppearance,
+  tuiButtonOptionsProvider,
+} from '@taiga-ui/core';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { TUI_VALIDATION_ERRORS } from '@taiga-ui/kit';
 import { DisciplineService } from '../services/discipline.service';
-import { take } from 'rxjs';
+import { EMPTY, catchError, take, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-create-discipline-page',
@@ -23,14 +25,13 @@ import { take } from 'rxjs';
     {
       provide: TUI_VALIDATION_ERRORS,
       useValue: {
-        required: 'Введите значение'
+        required: 'Введите значение',
       },
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateDisciplinePageComponent {
-
   disciplineForm = new FormGroup({
     name: new FormControl<string | null>('', [Validators.required]),
     checkKnowledge: new FormControl<string | null>('', [Validators.required]),
@@ -42,17 +43,25 @@ export class CreateDisciplinePageComponent {
 
   constructor(
     private disciplineService: DisciplineService,
-    private tuiAlertService: TuiAlertService
+    private tuiAlertService: TuiAlertService,
+    private router: Router,
+    private logger: LoggerService
   ) {}
 
-  readonly itemsType = ['Экзамен', 'Зачет', "Диф.зачет"];
+  readonly itemsType = ['Экзамен', 'Зачет', 'Диф.зачет'];
 
   rejectedFiles: readonly TuiFileLike[] = [];
 
   ngOnInit(): void {
-    this.disciplineForm.controls['files'].statusChanges.subscribe((response) => {
-      console.info('ERRORS', this.disciplineForm.controls['files'].errors, '\n');
-    });
+    this.disciplineForm.controls['files'].statusChanges.subscribe(
+      (response) => {
+        console.info(
+          'ERRORS',
+          this.disciplineForm.controls['files'].errors,
+          '\n'
+        );
+      }
+    );
   }
 
   onReject(files: TuiFileLike | readonly TuiFileLike[]): void {
@@ -61,7 +70,9 @@ export class CreateDisciplinePageComponent {
 
   removeFile({ name }: File): void {
     this.disciplineForm.controls['files'].setValue(
-      this.disciplineForm.controls['files'].value?.filter((current: File) => current.name !== name) ?? []
+      this.disciplineForm.controls['files'].value?.filter(
+        (current: File) => current.name !== name
+      ) ?? []
     );
   }
 
@@ -70,26 +81,46 @@ export class CreateDisciplinePageComponent {
       (rejected) => rejected.name !== name
     );
   }
-  
-   onSubmit() {
-    if (this.disciplineForm.valid) {
-      const { name, checkKnowledge, organization, tags, description, files } = this.disciplineForm.value;
 
-      this.disciplineService.create$(name!, checkKnowledge!, organization!, tags!, description!, files!).subscribe({
-        error: (error) => {
-          this.tuiAlertService
-            .open('При создании дисциплины произошла ошибка', {
-              status: 'error',
-              autoClose: false,
-            })
-            .pipe(take(1))
-            .subscribe();
-          console.error('Registration error', error);
-        },
-      });
-      this.disciplineForm.reset();
-    } else {
+  onSubmit() {
+    if (!this.disciplineForm.valid) {
       this.disciplineForm.markAllAsTouched();
     }
+
+    const { name, checkKnowledge, organization, tags, description, files } =
+      this.disciplineForm.value;
+
+    this.disciplineService
+      .create$(
+        name!,
+        checkKnowledge!,
+        organization!,
+        tags!,
+        description!,
+        files!
+      )
+      .pipe(
+        tap(() => {
+          this.disciplineForm.reset();
+        }),
+        catchError(() => {
+          this.showErrorNotification();
+          this.logger.error('Error fetching create discipline error');
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this.router.navigateByUrl('/disciplines');
+      });
+  }
+
+  private showErrorNotification() {
+    this.tuiAlertService
+      .open('При создании дисциплины произошла ошибка', {
+        status: 'error',
+        autoClose: false,
+      })
+      .pipe(take(1))
+      .subscribe();
   }
 }
