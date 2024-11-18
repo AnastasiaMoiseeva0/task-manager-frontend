@@ -1,0 +1,32 @@
+<section class="content">
+  <h1 class="content__title tui-text_h3">Регистрация</h1>
+  <form class="form b-form" [formGroup]="registerForm" (submit)="onSubmit()">
+    <label class="form__field" tuiLabel="Введите email">
+      <tui-input formControlName="email" class="tui-space_top-2">
+        Email
+        <input tuiTextfield type="email" />
+      </tui-input>
+      <tui-error
+        [error]="[] | tuiFieldError | async"
+        formControlName="email"
+      ></tui-error>
+    </label>
+    <label class="form__field" tuiLabel="Введите пароль">
+      <tui-input-password formControlName="password" class="tui-space_top-2">
+        Пароль
+      </tui-input-password>
+      <tui-error
+        [error]="[] | tuiFieldError | async"
+        formControlName="password"
+      ></tui-error>
+    </label>
+    <button type="submit" appearance="primary" tuiButton class="form__button">
+      Зарегистрироваться
+    </button>
+  </form>
+  <p class="content__span tui-text_body-m-2">
+    Уже есть аккаунт? <a routerLink="/login" class="content__link">Войти</a>
+  </p>
+</section>
+
+<router-outlet />
