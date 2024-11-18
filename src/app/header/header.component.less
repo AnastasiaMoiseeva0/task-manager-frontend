@@ -1,0 +1,50 @@
+.header {
+  background-color: #fff;
+  box-shadow: 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 2rem 1rem;
+
+  &__title {
+    font: var(--tui-font-text-s);
+    color: #000;
+    margin: 0;
+
+    @media (min-width: 768px) {
+      font: var(--tui-font-text-m-2);
+    }
+
+    @media (min-width: 1280px) {
+      font: var(--tui-font-text-l);
+    }
+  }
+
+  &__icon {
+    margin-right: 1rem;
+  }
+
+  &__menu {
+    background-color: var(--tui-base-01);
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      width: 15rem;
+    }
+  }
+
+  &__menu-item {
+    color: #000;
+    align-self: center;
+
+    &_active {
+      color: var(--tui-support-02);
+    }
+  }
+
+  &__menu-button {
+    color: #000;
+  }
+}

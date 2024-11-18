@@ -23,8 +23,8 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent {
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    email: new FormControl<string>('', [Validators.required, Validators.email]),
+    password: new FormControl<string>('', [Validators.required]),
   });
 
   constructor(
@@ -43,6 +43,7 @@ export class LoginPageComponent {
     this.loginService
       .authorize(email!, password!)
       .pipe(
+        take(1),
         tap(() => {
           this.router.navigateByUrl('/schedule');
         }),

@@ -42,6 +42,7 @@ export class RegisterPageComponent {
     this.registerService
       .register(email!, password!)
       .pipe(
+        take(1),
         tap(() => {
           this.showSuccessNotification();
         }),

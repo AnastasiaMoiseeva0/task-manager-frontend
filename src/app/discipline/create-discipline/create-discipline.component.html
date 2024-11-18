@@ -1,0 +1,107 @@
+<section class="create-disciplines">
+  <div class="create-disciplines__header">
+    <h1 class="create-disciplines__title">Новая дисциплина</h1>
+  </div>
+  <div>
+    <form class="b-form create-disciplines__form" [formGroup]="disciplineForm" (submit)="onSubmit()">
+      <label class="create-disciplines__field" tuiLabel="Введите наименование дисциплины">
+        <tui-input
+          
+          formControlName="name"
+          tuiTextfieldSize="l"
+          [tuiTextfieldCleaner]="true"
+        >
+          Наименование дисциплины*
+          <input tuiTextfield type="text" />
+        </tui-input>
+        <tui-error
+          [error]="[] | tuiFieldError | async"
+          formControlName="name"
+        ></tui-error>
+      </label>
+      <label class="create-disciplines__field" tuiLabel="Введите наименование учебного заведения">
+        <tui-input
+         
+          formControlName="organization"
+          tuiTextfieldSize="l"
+          [tuiTextfieldCleaner]="true"
+        >
+          Учебное заведение
+          <input tuiTextfield type="text" />
+        </tui-input>
+      </label>
+      <label class="create-disciplines__field" tuiLabel="Выберите форму проверки знаний">
+        <tui-select
+          #select
+          formControlName="checkKnowledge"
+        >
+          Форма проверки знаний*
+          <tui-data-list *tuiDataList>
+            <tui-opt-group>
+              @for (item of itemsType; track $index) {
+              <button tuiOption type="button" [value]="item">
+                {{ item }}
+              </button>
+              }
+            </tui-opt-group>
+          </tui-data-list>
+        </tui-select>
+        <tui-error
+          [error]="[] | tuiFieldError | async"
+          formControlName="checkKnowledge"
+        ></tui-error>
+      </label>
+      <label class="create-disciplines__field" tuiLabel="Введите теги для дисциплины">
+        <tui-input-tag
+          class="b-form"
+          formControlName="tags"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          Введите теги
+        </tui-input-tag>
+      </label>
+      <label class="create-disciplines__field" tuiLabel="Добавьте описание">
+        <tui-textarea
+          formControlName="description"
+        >
+          Описание к дисциплине</tui-textarea
+        >
+      </label>
+      <label class="create-disciplines__field" tuiLabel="Добавьте файлы">
+        <tui-input-files
+          formControlName="files"
+          [multiple]="true"
+          accept=""
+          (reject)="onReject($event)"
+        ></tui-input-files>
+        <tui-files class="tui-space_top-1">
+          <ng-container *ngFor="
+            let file of disciplineForm.controls['files'].valueChanges | async
+          ">
+            <tui-file
+              [file]="file"
+              [showDelete]="disciplineForm.controls['files'].enabled"
+              (removed)="removeFile(file)"
+            ></tui-file>
+
+          </ng-container>
+          <tui-file
+            *ngFor="let file of rejectedFiles"
+            state="error"
+            [file]="file"
+            [showDelete]="disciplineForm.controls['files'].enabled"
+            (removed)="clearRejected(file)"
+          ></tui-file>
+        </tui-files>
+      </label>
+      <button
+        type="submit"
+        appearance="primary"
+        tuiButton
+        class="create-disciplines__button"
+      >
+        Добавить
+      </button>
+    </form>
+  </div>
+</section>

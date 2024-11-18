@@ -1,0 +1,61 @@
+<tui-scrollbar class="scroll">
+  <section class="table">
+    <div class="disciplines__table-container">
+      <table class="tui-table disciplines__table" tuiTable>
+        <thead>
+          <tr>
+            <th class="tui-table__th" tuiTh>Тип дисциплины</th>
+            <th class="tui-table__th" tuiTh>Корпус</th>
+            <th class="tui-table__th" tuiTh>Аудитория</th>
+            <th class="tui-table__th" tuiTh>Преподаватель</th>
+            <th class="tui-table__th disciplines__table_th-icon" tuiTh></th>
+            <th class="tui-table__th disciplines__table_th-icon" tuiTh></th>
+          </tr>
+        </thead>
+        <tbody tuiTbody>
+          @for (event of events$ | async; track $index) {
+          <tr class="tui-table__tr">
+            <td class="tui-table__td" tuiTd>
+              <div>
+                <span tuiTitle>{{ event.classType }}</span>
+              </div>
+            </td>
+            <td class="tui-table__td" tuiTd>
+              <div>
+                <span tuiTitle>{{ event.building }}</span>
+              </div>
+            </td>
+            <td class="tui-table__td" tuiTd>
+              <div>
+                <span tuiTitle>{{ event.auditorium }}</span>
+              </div>
+            </td>
+            <td class="tui-table__td" tuiTd>
+              <div>
+                <span tuiTitle>{{ event.professorName }}</span>
+              </div>
+            </td>
+            <td tuiTd class="disciplines__table_td-icon">
+              <span tuiStatus>
+                <tui-svg src="tuiIconEdit2"></tui-svg>
+              </span>
+            </td>
+            <td tuiTd class="disciplines__table_td-icon">
+              <span tuiStatus>
+                <button
+                  appearance="link"
+                  icon="tuiIconTrash2"
+                  size="xs"
+                  tuiIconButton
+                >
+                  Delete
+                </button>
+              </span>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</tui-scrollbar>

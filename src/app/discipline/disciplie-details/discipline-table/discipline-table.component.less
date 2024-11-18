@@ -1,0 +1,71 @@
+.disciplines {
+  margin: 2rem 4rem;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__button {
+    text-decoration: none;
+    color: #000;
+  }
+
+  &__title {
+    margin: 0 0 1rem;
+    font: var(--tui-font-heading-6);
+    text-align: center;
+
+    @media (min-width: 768px) {
+      font: var(--tui-font-heading-5);
+      margin: 0;
+    }
+
+    @media (min-width: 1280px) {
+      font: var(--tui-font-heading-4);
+    }
+  }
+
+  &__input {
+    margin: 1rem 0 1rem;
+    max-width: 20rem;
+
+    @media (min-width: 768px) {
+      margin: 2rem 0 2rem;
+      max-width: 40rem;
+    }
+
+    @media (min-width: 1280px) {
+      max-width: 28rem;
+    }
+  }
+
+  &__table {
+    &_th-icon,
+    &_td-icon {
+      width: 40px;
+      cursor: pointer;
+    }
+  }
+}
+
+.scroll {
+  width: 100%;
+
+  @media (min-width: 1280px) {
+    min-width: 50rem;
+  }
+
+  @media (min-width: 1440px) {
+    min-width: 60rem;
+  }
+
+  @media (min-width: 1920px) {
+    min-width: 80rem;
+  }
+}

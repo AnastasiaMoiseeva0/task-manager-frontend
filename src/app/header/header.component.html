@@ -1,0 +1,32 @@
+<header tuiNavigationHeader class="header">
+  <h1 class="header__title"><tui-svg class="header__icon" src="tuiIconCalendarLarge"></tui-svg>Student Smart Schedule</h1>
+  <div>
+    <tui-hosted-dropdown
+      [canOpen]="!expanded"
+      [content]="dropdown"
+      [sided]="false"
+      [(open)]="open"
+      tuiDropdownAlign="left"
+      tuiDropdownDirection="bottom"
+    >
+      <button
+        class="header__menu-button"
+        iconRight="tuiIconChevronDown"
+        tuiAppearance="flat"
+        tuiButton
+        [tuiAppearanceState]="open ? 'hover' : null"
+        (click)="submenu = expanded && !submenu"
+      >
+        Меню
+      </button>
+      <ng-template #dropdown>
+        <tui-data-list class="header__menu" size="m">
+          <a routerLink="/profile" routerLinkActive="header__menu-item_active" class="header__menu-item" tuiOption>Профиль</a>
+          <a routerLink="/schedule" routerLinkActive="header__menu-item_active" class="header__menu-item" tuiOption>Мои расписания</a>
+          <a routerLink="/disciplines" routerLinkActive="header__menu-item_active" class="header__menu-item" tuiOption>Дисциплины</a>
+        </tui-data-list>
+      </ng-template>
+    </tui-hosted-dropdown>
+    <tui-avatar [style.background]="'AI' | tuiAutoColor" src="AI"></tui-avatar>
+  </div>
+</header>
