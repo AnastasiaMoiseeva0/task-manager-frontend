@@ -21,6 +21,7 @@ import localeRu from '@angular/common/locales/ru'
 import { DisciplineService } from './discipline/services/discipline.service';
 import { SheduleService } from './schedule/services/shedule.service';
 import { TokenInterceptor } from './interceptors/token-interceptor';
+import { AuthGuard } from './guards/canActivateRouteGuard';
 
 registerLocaleData(localeRu);
 
@@ -46,6 +47,7 @@ registerLocaleData(localeRu);
     DisciplineService,
     SheduleService,
     CacheService,
+    AuthGuard,
     {
       provide: API_URL,
       useValue: environment.apiUrl,

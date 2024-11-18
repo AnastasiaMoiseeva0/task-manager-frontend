@@ -54,7 +54,7 @@ export class CreateDisciplinePageComponent {
 
   ngOnInit(): void {
     this.disciplineForm.controls['files'].statusChanges.subscribe(
-      (response) => {
+      () => {
         console.info(
           'ERRORS',
           this.disciplineForm.controls['files'].errors,
@@ -100,6 +100,7 @@ export class CreateDisciplinePageComponent {
         files!
       )
       .pipe(
+        take(1),
         tap(() => {
           this.disciplineForm.reset();
         }),

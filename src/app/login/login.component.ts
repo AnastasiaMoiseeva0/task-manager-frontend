@@ -43,6 +43,7 @@ export class LoginPageComponent {
     this.loginService
       .authorize(email!, password!)
       .pipe(
+        take(1),
         tap(() => {
           this.router.navigateByUrl('/schedule');
         }),
